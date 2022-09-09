@@ -51,9 +51,9 @@ class MySearchDelegate extends SearchDelegate {
   List<Widget>? buildActions(BuildContext context) => [
         IconButton(
             onPressed: () {
-              if(query.isEmpty){
+              if (query.isEmpty) {
                 close(context, null);
-              }else{
+              } else {
                 query = "";
               }
             },
@@ -69,7 +69,7 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> suggestions=[
+    List<String> suggestions = [
       "Uşak",
       "Denizli",
       "Sakarya",
@@ -79,14 +79,15 @@ class MySearchDelegate extends SearchDelegate {
 
     return ListView.builder(
       itemCount: suggestions.length,
-      itemBuilder: (context,index){
-      final suggestion=suggestions[index];
-      return ListTile(
-        title: Text(suggestion),
-        onTap: (){
-
-        },
-      );
-    },);
+      itemBuilder: (context, index) {
+        final suggestion = suggestions[index];
+        return ListTile(
+          title: Text(suggestion),
+          onTap: () {
+            query = suggestion;
+          },
+        );
+      },
+    );
   }
 }
