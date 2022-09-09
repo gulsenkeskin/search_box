@@ -14,20 +14,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Search'),
+      home: const CustomSearchBox(title: 'Search'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class CustomSearchBox extends StatefulWidget {
+  const CustomSearchBox({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CustomSearchBox> createState() => _CustomSearchBoxState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CustomSearchBoxState extends State<CustomSearchBox> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +41,20 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.search))
         ],
       ),
-      body: SizedBox(),
+      body: const SizedBox(),
     );
   }
 }
 
 class MySearchDelegate extends SearchDelegate {
+  List<String> searchResults = [
+    "Uşak",
+    "Denizli",
+    "Sakarya",
+    "İstanbul",
+    "Londra"
+  ];
+
   @override
   List<Widget>? buildActions(BuildContext context) => [
         IconButton(
@@ -66,21 +74,17 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) => Center(
-    child: Text(
-      query,
-      style:TextStyle(fontSize: 64,fontWeight: FontWeight.bold)
-    ),
-  );
+        child: Text(query,
+            style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold)),
+      );
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> suggestions = [
-      "Uşak",
-      "Denizli",
-      "Sakarya",
-      "İstanbul",
-      "Londra"
-    ];
+    List<String> suggestions = searchResults.where((searchResult) {
+      final result = searchResult.toLowerCase();
+      final input = query.toLowerCase();
+      return result.contains(input);
+    }).toList();
 
     return ListView.builder(
       itemCount: suggestions.length,
