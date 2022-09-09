@@ -65,7 +65,12 @@ class MySearchDelegate extends SearchDelegate {
       icon: const Icon(Icons.arrow_back));
 
   @override
-  Widget buildResults(BuildContext context) => Container();
+  Widget buildResults(BuildContext context) => Center(
+    child: Text(
+      query,
+      style:TextStyle(fontSize: 64,fontWeight: FontWeight.bold)
+    ),
+  );
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -85,6 +90,7 @@ class MySearchDelegate extends SearchDelegate {
           title: Text(suggestion),
           onTap: () {
             query = suggestion;
+            showResults(context);
           },
         );
       },
